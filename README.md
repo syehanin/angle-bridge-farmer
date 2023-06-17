@@ -4,7 +4,7 @@ This script swap ~0.0004 BNB (random values) to agEUR using Pancakeswap in BSC n
 ## Prerequisites
 
 - Top up your account with BNB in BSC network
-- Add private keys to data.txt (one line - one key)
+- Add private keys to private_key.txt (one line - one key)
 - You might change min/max delay between accounts and amount to bridge in BNB in config.py
 
 ## Installation
