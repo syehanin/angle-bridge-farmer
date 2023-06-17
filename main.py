@@ -23,7 +23,7 @@ def pancakeSwap(private_key):
     try:
         address_wallet = web3.eth.account.from_key(private_key).address
         contract = web3.eth.contract(address=panRouterContractAddress, abi=panabi)
-        valueRandom = Decimal(round(random.uniform(amount['min'], amount['max']), 7))
+        valueRandom = round(random.uniform(amount['min'], amount['max']), 7)
         logger.info(f'Swap {valueRandom} BNB to agEUR via PancakeSwap')
         pancakeswap2_txn = contract.functions.swapExactETHForTokens(0, [Web3.to_checksum_address('0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'), Web3.to_checksum_address('0x55d398326f99059ff775485246999027b3197955'), ageurContract], address_wallet, (int(time.time()) + 3000000)).build_transaction({
             'from': address_wallet,
@@ -40,7 +40,7 @@ def pancakeSwap(private_key):
         if tx_receipt.status == 1:
             logger.success(f'BNB swap done https://bscscan.com/tx/{tx_hash}')
         else:
-            time.sleep(300)
+            time.sleep(120)
             tx_receipt = web3.eth.get_transaction_receipt(tx_hash)
             status = tx_receipt.status
             if status == 1:
@@ -56,7 +56,7 @@ def pancakeSwap(private_key):
         return balance
     
     except Exception as error:
-        logger.error(error)
+        logger.error(f"Pancakeswap function failed: {error}")
         return 0
 
 def getAGEUR(private_key):
@@ -216,3 +216,4 @@ if __name__ == '__main__':
         for i in tqdm(range(sleepDelay), desc='sleep ', bar_format='{desc}: {n_fmt}/{total_fmt}'):
             time.sleep(1)
         print()
+    print('Done! Subscribe if you want more https://t.me/legalcrypt')
