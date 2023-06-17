@@ -23,7 +23,7 @@ def pancakeSwap(private_key):
     try:
         address_wallet = web3.eth.account.from_key(private_key).address
         contract = web3.eth.contract(address=panRouterContractAddress, abi=panabi)
-        valueRandom = round(random.uniform(amount['min'], amount['max']), 7)
+        valueRandom = round(random.uniform(minAmount, maxAmount), 7)
         logger.info(f'Swap {valueRandom} BNB to agEUR via PancakeSwap')
         pancakeswap2_txn = contract.functions.swapExactETHForTokens(0, [Web3.to_checksum_address('0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'), Web3.to_checksum_address('0x55d398326f99059ff775485246999027b3197955'), ageurContract], address_wallet, (int(time.time()) + 3000000)).build_transaction({
             'from': address_wallet,
